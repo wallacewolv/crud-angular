@@ -2,14 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Course } from '../model/course';
+import { Observable, first, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  constructor(private httpClien: HttpClient) {}
+  private readonly API = '/assets/courses.json';
 
-  list(): Array<Course> {
-    return [{ _id: '1', name: 'Angular', category: 'front-end' }];
+  constructor(private httpClient: HttpClient) {}
+
+  list(): Observable<Array<Course>> {
+    return this.httpClient.get<Array<Course>>(this.API).pipe(
+      first(), // first obtem os dados e encerra a conexão
+      tap((courses) => console.log(courses))
+    );
   }
 }
