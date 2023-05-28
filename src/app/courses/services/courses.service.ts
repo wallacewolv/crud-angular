@@ -15,7 +15,7 @@ export class CoursesService {
   list(): Observable<Array<Course>> {
     return this.httpClient.get<Array<Course>>(this.API).pipe(
       first(), // first obtem os dados e encerra a conexão
-      delay(2000),
+      // delay(2000),
       tap((courses) => console.log(courses))
     );
   }
