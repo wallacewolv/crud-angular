@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 interface CourseCategory {
@@ -16,11 +20,11 @@ interface CourseCategory {
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   courseCategories: Array<CourseCategory>;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location
@@ -56,11 +60,11 @@ export class CourseFormComponent implements OnInit {
   }
 
   private onSuccess() {
-    this.snackBar.open('Curso salvo com sucesso', 'X', { duration: 5000 });
+    this.snackBar.open('Curso salvo com sucesso', '', { duration: 5000 });
     this.onCancel();
   }
 
   private onError() {
-    this.snackBar.open('Erro ao salvar curso', 'X', { duration: 5000 });
+    this.snackBar.open('Erro ao salvar curso', '', { duration: 5000 });
   }
 }
