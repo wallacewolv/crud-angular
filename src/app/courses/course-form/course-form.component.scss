@@ -12,6 +12,9 @@ mat-card-actions {
 .full-width {
   width: 100%;
 }
+.full-width:first-child {
+  margin-top: 2em;
+}
 
 .min-width {
   width: 100%;
