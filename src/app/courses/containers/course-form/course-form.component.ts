@@ -21,21 +21,12 @@ export class CourseFormComponent implements OnInit {
     category: [''],
   });
 
-  courseCategories: Array<CourseCategory>;
-
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location
-  ) {
-    this.courseCategories = [
-      { value: 'null', viewValue: '' },
-      { value: 'front-end', viewValue: 'Front-End' },
-      { value: 'back-end', viewValue: 'Back-End' },
-      { value: 'big-data', viewValue: 'Big Data' },
-    ];
-  }
+  ) {}
 
   ngOnInit(): void {}
 

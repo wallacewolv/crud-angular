@@ -20,6 +20,10 @@ export class CoursesService {
     );
   }
 
+  loadById(id: string): Observable<Course> {
+    return this.httpClient.get<Course>(`${this.API}/${id}`);
+  }
+
   save(record: Partial<Course>): Observable<Course> {
     return this.httpClient.post<Course>(this.API, record).pipe(first());
   }

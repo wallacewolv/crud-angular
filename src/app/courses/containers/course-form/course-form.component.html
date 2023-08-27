@@ -10,12 +10,9 @@
       <mat-form-field class="full-width">
         <mat-label>Categoria</mat-label>
         <mat-select formControlName="category">
-          <mat-option
-            *ngFor="let category of courseCategories"
-            [value]="category.value"
-          >
-            {{ category.viewValue }}
-          </mat-option>
+          <mat-option value="front-end">Front-End</mat-option>
+          <mat-option value="back-end">Back-End</mat-option>
+          <mat-option value="big-data">Big Data</mat-option>
         </mat-select>
       </mat-form-field>
     </form>
