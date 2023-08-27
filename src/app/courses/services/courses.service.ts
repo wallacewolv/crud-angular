@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { first, Observable } from 'rxjs';
 
 import { Course } from '../model/course';
-import { Observable, delay, first, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +42,9 @@ export class CoursesService {
     return this.httpClient
       .put<Course>(`${this.API}/${record._id}`, record)
       .pipe(first());
+  }
+
+  remove(id: string) {
+    return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
   }
 }
