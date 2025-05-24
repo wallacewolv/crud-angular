@@ -8,7 +8,14 @@ export interface LoginBody {
 
 export const ListCourses = http.get<never, never, Course[]>(
   '/courses',
-  async () => {
+  async ({ request }) => {
+    const url = new URL(request.url);
+    const errorTest = url.searchParams.get('errorTest');
+
+    if (errorTest === 'true') {
+      return new HttpResponse(null, { status: 404, statusText: 'Not Found' });
+    }
+
     const response: Course[] = [
       {
         _id: '1',
