@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { DestroyRef, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { first, Observable, tap } from 'rxjs';
 
 import { Course } from '../model/course';
 
@@ -7,20 +9,18 @@ import { Course } from '../model/course';
   providedIn: 'root',
 })
 export class CoursesService {
-  constructor(private httpClient: HttpClient) {}
+  private readonly API = '';
 
-  list(): Course[] {
-    return [
-      {
-        _id: '1',
-        name: 'Angular',
-        category: 'front-end',
-      },
-      {
-        _id: '2',
-        name: 'Node.js',
-        category: 'back-end',
-      },
-    ];
+  constructor(
+    private httpClient: HttpClient,
+    private destroyRef: DestroyRef,
+  ) {}
+
+  list(): Observable<Course[]> {
+    return this.httpClient.get<Course[]>(`${this.API}/courses`).pipe(
+      first(),
+      tap((courses) => console.log(courses)),
+      takeUntilDestroyed(this.destroyRef),
+    );
   }
 }
