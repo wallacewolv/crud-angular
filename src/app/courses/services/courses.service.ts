@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { DestroyRef, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { first, Observable, tap } from 'rxjs';
+import { delay, first, Observable } from 'rxjs';
 
 import { Course } from '../model/course';
 
@@ -17,10 +17,8 @@ export class CoursesService {
   ) {}
 
   list(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>(`${this.API}/courses`).pipe(
-      first(),
-      tap((courses) => console.log(courses)),
-      takeUntilDestroyed(this.destroyRef),
-    );
+    return this.httpClient
+      .get<Course[]>(`${this.API}/courses`)
+      .pipe(first(), delay(1000), takeUntilDestroyed(this.destroyRef));
   }
 }
