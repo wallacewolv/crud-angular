@@ -17,7 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     importProvidersFrom(BrowserAnimationsModule, FormsModule),
-
     provideAnimationsAsync(),
   ],
 };
