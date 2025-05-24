@@ -22,6 +22,6 @@ export class CoursesService {
 
     return this.httpClient
       .get<Course[]>(`${this.API}/courses`, { params })
-      .pipe(first(), delay(1000), takeUntilDestroyed(this.destroyRef));
+      .pipe(first(), delay(500), takeUntilDestroyed(this.destroyRef));
   }
 }
