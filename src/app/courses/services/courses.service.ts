@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DestroyRef, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { delay, first, Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { Course } from '../model/course';
   providedIn: 'root',
 })
 export class CoursesService {
-  private readonly API = '';
+  private readonly API = '/api-courses/courses';
 
   constructor(
     private httpClient: HttpClient,
@@ -17,11 +17,11 @@ export class CoursesService {
   ) {}
 
   list(): Observable<Course[]> {
-    const errorTest = false;
-    const params = new HttpParams().append('errorTest', errorTest);
+    // const errorTest = false;
+    // const params = new HttpParams().append('errorTest', errorTest);
 
     return this.httpClient
-      .get<Course[]>(`${this.API}/courses`, { params })
+      .get<Course[]>(this.API)
       .pipe(first(), delay(500), takeUntilDestroyed(this.destroyRef));
   }
 }
