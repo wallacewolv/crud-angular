@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { AppMaterialModule } from './shared/app-material/app-material.module';
 
@@ -11,5 +11,9 @@ import { AppMaterialModule } from './shared/app-material/app-material.module';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'crud-angular';
+  constructor(private router: Router) {}
+
+  goToHome() {
+    this.router.navigate(['']);
+  }
 }

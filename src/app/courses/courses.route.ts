@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
 
-import { CoursesComponent } from './courses.component';
-
 export const COURSES_ROUTES: Routes = [
   {
     path: '',
-    component: CoursesComponent,
+    loadComponent: () =>
+      import('./courses.component').then((c) => c.CoursesComponent),
+  },
+  {
+    path: 'new',
+    loadComponent: () =>
+      import('./course-form/course-form.component').then(
+        (c) => c.CourseFormComponent,
+      ),
   },
 ];
