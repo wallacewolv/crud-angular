@@ -24,4 +24,10 @@ export class CoursesService {
       .get<Course[]>(this.API)
       .pipe(first(), delay(500), takeUntilDestroyed(this.destroyRef));
   }
+
+  save(record: Omit<Course, '_id'>): Observable<Course> {
+    return this.httpClient
+      .post<Course>(this.API, record)
+      .pipe(first(), takeUntilDestroyed(this.destroyRef));
+  }
 }

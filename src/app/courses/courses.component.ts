@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
-import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
 import { CategoryPipe } from '../shared/pipes/category.pipe';
 import { Course } from './model/course';
 import { CoursesService } from './services/courses.service';
@@ -22,7 +21,7 @@ export class CoursesComponent {
 
   constructor(
     private coursesService: CoursesService,
-    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -34,9 +33,11 @@ export class CoursesComponent {
     );
   }
 
-  onError(errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg,
+  private onError(message: string, action = 'X') {
+    this.snackBar.open(message, action, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      duration: 3000,
     });
   }
 
