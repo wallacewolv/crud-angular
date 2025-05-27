@@ -31,9 +31,23 @@ export class CoursesService {
       .pipe(first(), takeUntilDestroyed(this.destroyRef));
   }
 
-  save(record: Omit<Course, '_id'>): Observable<Course> {
+  save(record: Course): Observable<Course> {
+    if (record._id) {
+      return this.update(record);
+    }
+
+    return this.create(record);
+  }
+
+  private create(record: Course): Observable<Course> {
     return this.httpClient
       .post<Course>(this.API, record)
+      .pipe(first(), takeUntilDestroyed(this.destroyRef));
+  }
+
+  private update(record: Course): Observable<Course> {
+    return this.httpClient
+      .put<Course>(`${this.API}/${record._id}`, record)
       .pipe(first(), takeUntilDestroyed(this.destroyRef));
   }
 }
