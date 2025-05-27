@@ -5,19 +5,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
-import { CategoryPipe } from '../shared/pipes/category.pipe';
+import { CoursesListComponent } from './courses-list/courses-list.component';
 import { Course } from './model/course';
 import { CoursesService } from './services/courses.service';
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [CommonModule, AppMaterialModule, CategoryPipe],
+  imports: [CommonModule, AppMaterialModule, CoursesListComponent],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
   courses$: Observable<Course[]>;
-  displayedColumns = ['name', 'category', 'actions'];
 
   constructor(
     private coursesService: CoursesService,
