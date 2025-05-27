@@ -28,8 +28,8 @@ export class CourseFormComponent implements OnInit {
     private location: Location,
   ) {
     this.courseForm = this.formBuilder.group({
-      name: new UntypedFormControl(null),
-      category: new UntypedFormControl(null),
+      name: new UntypedFormControl(''),
+      category: new UntypedFormControl(''),
     });
   }
 
