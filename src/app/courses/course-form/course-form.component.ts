@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -25,6 +25,7 @@ export class CourseFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
+    private location: Location,
   ) {
     this.courseForm = this.formBuilder.group({
       name: new UntypedFormControl(null),
@@ -38,22 +39,25 @@ export class CourseFormComponent implements OnInit {
     const newCourse = this.courseForm.getRawValue();
 
     this.coursesService.save(newCourse).subscribe({
-      next: (result) => {
-        console.log(result);
+      next: () => {
+        this.openSnackBar('Curso salvo com sucesso!');
+        this.onCancel();
       },
       error: () => {
-        this.onError('Erro ao salvar curso.');
+        this.openSnackBar('Erro ao salvar curso.');
       },
     });
   }
 
-  onCancel() {}
+  onCancel() {
+    this.location.back();
+  }
 
-  private onError(message: string, action = 'X') {
+  private openSnackBar(message: string, action = 'X') {
     this.snackBar.open(message, action, {
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      duration: 3000,
+      duration: 5000,
     });
   }
 }
