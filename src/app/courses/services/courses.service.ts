@@ -25,6 +25,12 @@ export class CoursesService {
       .pipe(first(), delay(500), takeUntilDestroyed(this.destroyRef));
   }
 
+  findById(id: string): Observable<Course> {
+    return this.httpClient
+      .get<Course>(`${this.API}/${id}`)
+      .pipe(first(), takeUntilDestroyed(this.destroyRef));
+  }
+
   save(record: Omit<Course, '_id'>): Observable<Course> {
     return this.httpClient
       .post<Course>(this.API, record)
