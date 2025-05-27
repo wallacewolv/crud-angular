@@ -7,8 +7,10 @@ import {
   UntypedFormGroup,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 import { AppMaterialModule } from '../../../shared/app-material/app-material.module';
+import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
@@ -26,14 +28,25 @@ export class CourseFormComponent implements OnInit {
     private coursesService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.courseForm = this.formBuilder.group({
+      _id: new UntypedFormControl(''),
       name: new UntypedFormControl(''),
       category: new UntypedFormControl(''),
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // eslint-disable-next-line dot-notation
+    const course: Course = this.activatedRoute.snapshot.data['course'];
+
+    this.courseForm.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category,
+    });
+  }
 
   onSubmit() {
     const newCourse = this.courseForm.getRawValue();
