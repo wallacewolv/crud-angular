@@ -4,12 +4,14 @@ export const COURSES_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./courses.component').then((c) => c.CoursesComponent),
+      import('./containers/courses/courses.component').then(
+        (c) => c.CoursesComponent,
+      ),
   },
   {
     path: 'new',
     loadComponent: () =>
-      import('./course-form/course-form.component').then(
+      import('./containers/course-form/course-form.component').then(
         (c) => c.CourseFormComponent,
       ),
   },

@@ -4,10 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 
-import { AppMaterialModule } from '../shared/app-material/app-material.module';
-import { CoursesListComponent } from './courses-list/courses-list.component';
-import { Course } from './model/course';
-import { CoursesService } from './services/courses.service';
+import { AppMaterialModule } from '../../../shared/app-material/app-material.module';
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
+import { Course } from '../../model/course';
+import { CoursesService } from '../../services/courses.service';
 @Component({
   selector: 'app-courses',
   standalone: true,
