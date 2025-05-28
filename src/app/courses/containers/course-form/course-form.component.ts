@@ -53,7 +53,7 @@ export class CourseFormComponent implements OnInit {
 
     this.coursesService.save(newCourse).subscribe({
       next: () => {
-        this.openSnackBar('Curso salvo com sucesso!');
+        this.openSnackBar('Curso salvo com sucesso!', 'OK');
         this.onCancel();
       },
       error: () => {

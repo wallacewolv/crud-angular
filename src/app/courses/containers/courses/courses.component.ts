@@ -24,20 +24,16 @@ export class CoursesComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.courses$ = this.coursesService.list().pipe(
+    this.courses$ = this.listCourses();
+  }
+
+  listCourses(): Observable<Course[]> {
+    return this.coursesService.list().pipe(
       catchError(() => {
-        this.onError('Erro ao carregar cursos.');
+        this.openSnackBar('Erro ao carregar cursos.');
         return of([]);
       }),
     );
-  }
-
-  private onError(message: string, action = 'X') {
-    this.snackBar.open(message, action, {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      duration: 3000,
-    });
   }
 
   onAdd() {
@@ -47,6 +43,26 @@ export class CoursesComponent {
   onEdit(course: Course) {
     this.router.navigate(['edit', course._id], {
       relativeTo: this.activatedRoute,
+    });
+  }
+
+  onRemove({ _id }: Course) {
+    this.coursesService.remove(_id).subscribe({
+      next: () => {
+        this.openSnackBar('Curso removido com sucesso.', 'OK');
+        this.courses$ = this.listCourses();
+      },
+      error: () => {
+        this.openSnackBar('Erro ao tentar remover o curso.');
+      },
+    });
+  }
+
+  private openSnackBar(message: string, action = 'X') {
+    this.snackBar.open(message, action, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      duration: 5000,
     });
   }
 }

@@ -50,4 +50,10 @@ export class CoursesService {
       .put<Course>(`${this.API}/${record._id}`, record)
       .pipe(first(), takeUntilDestroyed(this.destroyRef));
   }
+
+  remove(id: string): Observable<void> {
+    return this.httpClient
+      .delete<void>(`${this.API}/${id}`)
+      .pipe(takeUntilDestroyed(this.destroyRef));
+  }
 }
