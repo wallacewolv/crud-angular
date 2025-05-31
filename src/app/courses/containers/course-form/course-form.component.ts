@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -5,6 +6,7 @@ import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
+  Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -32,8 +34,12 @@ export class CourseFormComponent implements OnInit {
   ) {
     this.courseForm = this.formBuilder.group({
       _id: new UntypedFormControl(''),
-      name: new UntypedFormControl(''),
-      category: new UntypedFormControl(''),
+      name: new UntypedFormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+      ]),
+      category: new UntypedFormControl('', [Validators.required]),
     });
   }
 
@@ -64,6 +70,34 @@ export class CourseFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  controlField(fieldName: string): UntypedFormControl {
+    return this.courseForm.get(fieldName) as UntypedFormControl;
+  }
+
+  getErrorMessage(fieldName: string): string {
+    const field = this.controlField(fieldName);
+
+    if (field?.hasError('required')) {
+      return 'Campo obrigatório.';
+    }
+
+    if (field?.hasError('minlength')) {
+      const requiredLength: number = field.errors
+        ? field.errors['minlength'].requiredLength
+        : 3;
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
+    }
+
+    if (field?.hasError('maxlength')) {
+      const requiredLength: number = field.errors
+        ? field.errors['maxlength'].requiredLength
+        : 100;
+      return `Tamanho máximo excedido de ${requiredLength} caracteres.`;
+    }
+
+    return 'Campo inválido.';
   }
 
   private openSnackBar(message: string, action = 'X') {

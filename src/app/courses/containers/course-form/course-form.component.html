@@ -7,21 +7,28 @@
     <form [formGroup]="courseForm" class="min-width">
       <mat-form-field class="full-width mt-1" appearance="outline">
         <mat-label>Nome</mat-label>
-        <input matInput placeholder="Nome" formControlName="name">
+        <input matInput placeholder="Nome" formControlName="name" #name>
+        <mat-hint align="end">{{ name.value.length || 0 }} / 100</mat-hint>
+        <mat-error *ngIf="controlField('name')?.invalid">
+          {{ getErrorMessage('name') }}
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="full-width" appearance="outline">
+      <mat-form-field class="full-width mt-1" appearance="outline">
         <mat-label>Categoria</mat-label>
         <mat-select formControlName="category">
           <mat-option value="front-end">Front End</mat-option>
           <mat-option value="back-end">Back End</mat-option>
         </mat-select>
+        <mat-error *ngIf="controlField('category')?.invalid">
+          {{ getErrorMessage('category') }}
+        </mat-error>
       </mat-form-field>
     </form>
   </mat-card-content>
 
   <mat-card-actions class="justify-end actions-margin">
     <button mat-raised-button color="warn" class="mr-1" (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button (click)="onSubmit()" [disabled]="courseForm.invalid">Salvar</button>
   </mat-card-actions>
 </mat-card>
